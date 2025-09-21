@@ -23,7 +23,7 @@
 
     <script>
       (function () {
-        // --- Read query params (supports ?name=... or ?first=&last=)
+        // --- Read query params (?name=... &company=... or ?first=&last=)
         var qs = new URLSearchParams(location.search);
         function get(k){ return (qs.get(k) || "").replace(/[<>]/g, ""); }
 
@@ -40,13 +40,13 @@
         var hasName = !!name;
         var hasCompany = !!company;
 
-        // --- Dynamic variables (match your agent prompt keys)
+        // --- Dynamic variables for the agent
         var dyn = {
           customer_name: name || "",
           company: company || ""
         };
 
-        // --- Build greetings
+        // --- New greetings
         var defaultGreeting =
           "Hi there. I'm Lottie, one of the conference organisers here at PSMG. " +
           "We're super excited to have you on board this year. True to the theme of this year's conference, " +
@@ -62,6 +62,7 @@
           "to develop an agent (that's me by the way) to get your thoughts and interests ahead of the conference and help with any travel arrangements. " +
           "Shall we get started?";
 
+        // If we already know who they are (via query params), use the personalised opener; otherwise use the identity-confirming version
         var firstMessage = (hasName || hasCompany) ? personalisedGreeting : defaultGreeting;
 
         // --- Apply to widget before it initializes
@@ -77,5 +78,3 @@
     <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
   </body>
 </html>
-
-
