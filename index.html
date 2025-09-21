@@ -16,7 +16,6 @@
     <img class="logo" src="https://www.psmg.co.uk/images/~resized-300x200/~resized-strch-download.jpg" alt="PSMG Logo" />
 
     <!-- ElevenLabs Agent Widget -->
-    <!-- We’ll set dynamic variables from JS just below -->
     <elevenlabs-convai
       id="psmgAgent"
       agent-id="agent_6901k5h1cvv7fbvtex52v0a60fn4">
@@ -24,11 +23,10 @@
 
     <script>
       (function () {
-        // 1) Read query params
+        // --- Read query params (supports ?name=... or ?first=&last=)
         var qs = new URLSearchParams(location.search);
         function get(k){ return (qs.get(k) || "").replace(/[<>]/g, ""); }
 
-        // Accept either ?name=Jane%20Doe or ?first=&last=
         var name = get("name").trim();
         var first = get("first").trim();
         var last = get("last").trim();
@@ -39,24 +37,38 @@
           if (parts.length) name = parts.join(" ");
         }
 
-        // 2) Build dynamic variables object for the widget
-        //    IMPORTANT: Use the exact keys you reference in your Agent (e.g., {{ customer_name }}, {{ company }})
+        var hasName = !!name;
+        var hasCompany = !!company;
+
+        // --- Dynamic variables (match your agent prompt keys)
         var dyn = {
-          customer_name: name || "",   // e.g., "Jane Doe"
-          company: company || ""       // e.g., "Acme LLP"
+          customer_name: name || "",
+          company: company || ""
         };
 
-        // 3) Apply to the widget before it initializes
+        // --- Build greetings
+        var defaultGreeting =
+          "Hi there. I'm Lottie, one of the conference organisers here at PSMG. " +
+          "We're super excited to have you on board this year. True to the theme of this year's conference, " +
+          "we're continually finding ways to re-invent ourselves and have teamed up with Legal Engine to develop an agent " +
+          "(that's me by the way) to get your thoughts and interests ahead of the conference and help with any travel arrangements. " +
+          "May I please confirm who I'm speaking with?";
+
+        var personalisedGreeting =
+          "Hi " + (hasName ? name : "there") +
+          (hasCompany ? " from " + company : "") +
+          ". I'm Lottie, one of the conference organisers here at PSMG. We're super excited to have you on board this year. " +
+          "True to the theme of this year's conference, we're continually finding ways to re-invent ourselves and have teamed up with Legal Engine " +
+          "to develop an agent (that's me by the way) to get your thoughts and interests ahead of the conference and help with any travel arrangements. " +
+          "Shall we get started?";
+
+        var firstMessage = (hasName || hasCompany) ? personalisedGreeting : defaultGreeting;
+
+        // --- Apply to widget before it initializes
         var widget = document.getElementById("psmgAgent");
         if (widget) {
           widget.setAttribute("dynamic-variables", JSON.stringify(dyn));
-
-          // (Optional) Also customize the first line dynamically
-          // Requires your agent to allow overrides from the widget
-          // See: Widget → Overrides. :contentReference[oaicite:1]{index=1}
-          var greeting = "Hi" + (dyn.customer_name ? " " + dyn.customer_name : "") +
-                         (dyn.company ? " from " + dyn.company : "") + ", how can I help today?";
-          widget.setAttribute("override-first-message", greeting);
+          widget.setAttribute("override-first-message", firstMessage);
         }
       })();
     </script>
@@ -65,4 +77,5 @@
     <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
   </body>
 </html>
+
 
