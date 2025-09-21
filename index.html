@@ -5,39 +5,64 @@
     <title>Lottie PSMG Summit Agent</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <style>
-      body {
-        font-family: system-ui, Arial, sans-serif;
-        margin: 2rem;
-        line-height: 1.6;
-        background: #f9fafb;
-        color: #111827;
-        text-align: center;
-      }
-      h1 {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-      }
-      img.logo {
-        max-width: 100%;
-        height: auto;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        margin: 1.5rem 0;
-      }
-      p {
-        max-width: 600px;
-        margin: 0 auto;
-      }
+      body { font-family: system-ui, Arial, sans-serif; margin: 2rem; line-height: 1.6; background: #f9fafb; color: #111827; text-align: center; }
+      h1 { font-size: 2rem; margin-bottom: 1rem; }
+      img.logo { max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin: 1.5rem 0; }
+      p { max-width: 600px; margin: 0 auto; }
     </style>
   </head>
   <body>
-  
-
     <!-- Logo image -->
     <img class="logo" src="https://www.psmg.co.uk/images/~resized-300x200/~resized-strch-download.jpg" alt="PSMG Logo" />
 
     <!-- ElevenLabs Agent Widget -->
-<elevenlabs-convai agent-id="agent_6901k5h1cvv7fbvtex52v0a60fn4"></elevenlabs-convai>
+    <!-- We’ll set dynamic variables from JS just below -->
+    <elevenlabs-convai
+      id="psmgAgent"
+      agent-id="agent_6901k5h1cvv7fbvtex52v0a60fn4">
+    </elevenlabs-convai>
+
+    <script>
+      (function () {
+        // 1) Read query params
+        var qs = new URLSearchParams(location.search);
+        function get(k){ return (qs.get(k) || "").replace(/[<>]/g, ""); }
+
+        // Accept either ?name=Jane%20Doe or ?first=&last=
+        var name = get("name").trim();
+        var first = get("first").trim();
+        var last = get("last").trim();
+        var company = get("company").trim();
+
+        if (!name) {
+          var parts = [first, last].filter(Boolean);
+          if (parts.length) name = parts.join(" ");
+        }
+
+        // 2) Build dynamic variables object for the widget
+        //    IMPORTANT: Use the exact keys you reference in your Agent (e.g., {{ customer_name }}, {{ company }})
+        var dyn = {
+          customer_name: name || "",   // e.g., "Jane Doe"
+          company: company || ""       // e.g., "Acme LLP"
+        };
+
+        // 3) Apply to the widget before it initializes
+        var widget = document.getElementById("psmgAgent");
+        if (widget) {
+          widget.setAttribute("dynamic-variables", JSON.stringify(dyn));
+
+          // (Optional) Also customize the first line dynamically
+          // Requires your agent to allow overrides from the widget
+          // See: Widget → Overrides. :contentReference[oaicite:1]{index=1}
+          var greeting = "Hi" + (dyn.customer_name ? " " + dyn.customer_name : "") +
+                         (dyn.company ? " from " + dyn.company : "") + ", how can I help today?";
+          widget.setAttribute("override-first-message", greeting);
+        }
+      })();
+    </script>
+
+    <!-- Load the ElevenLabs widget -->
     <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
   </body>
 </html>
+
