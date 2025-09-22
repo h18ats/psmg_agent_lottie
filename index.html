@@ -34,6 +34,10 @@
       .btn.secondary{background:#e0ecff;color:#0b1f3b}
       .divider{height:1px;background:var(--border);margin:6px 0}
       .center{text-align:center}
+      /* Partner strip */
+      .partner{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin-top:12px}
+      .partner small{color:var(--muted)}
+      .le-logo{height:28px;max-width:180px;object-fit:contain;display:block}
       @media (max-width:800px){
         .fields{grid-template-columns:1fr}
       }
@@ -44,6 +48,7 @@
         h1{color:#cfe0ff}
         input[readonly]{background:#0f1730;border-color:#2a3865;color:#e8eef7}
         .btn.secondary{background:#203566;color:#e8eef7}
+        .partner{background:#0f1730;border-color:#2a3865}
       }
     </style>
   </head>
@@ -98,6 +103,15 @@
         </elevenlabs-convai>
         <div class="divider"></div>
         <p class="muted center" style="margin:6px 0 0">Powered by PSMG × Legal Engine</p>
+
+        <!-- Partner strip with Legal Engine logo + About link -->
+        <div class="partner">
+          <small>In partnership with</small>
+          <a id="leLink" href="https://legalengine.co.uk/about-us" target="_blank" rel="noopener" aria-label="About Legal Engine">
+            <img class="le-logo" src="https://legalengine.co.uk/hs-fs/hubfs/e8ad0e08-aa6c-4d44-9053-cdcf7bbaec5b.png?width=1704&height=678&name=e8ad0e08-aa6c-4d44-9053-cdcf7bbaec5b.png" alt="Legal Engine">
+          </a>
+          <a id="leTextLink" class="btn secondary" href="https://legalengine.co.uk/about-us" target="_blank" rel="noopener">About Legal Engine</a>
+        </div>
       </div>
     </div>
 
@@ -196,7 +210,7 @@
           widget.setAttribute("override-first-message", firstMessage);
         }
 
-        // Optional: log to n8n as before (kept minimal)
+        // Optional: log to n8n (minimal)
         try {
           var payload = new URLSearchParams();
           payload.set("event","landing_context");
@@ -219,6 +233,13 @@
             body: payload.toString()
           }).catch(function(){});
         } catch(e){}
+
+        // --- Append current querystring to Legal Engine About links (so UTMs follow)
+        var qsString = window.location.search || "";
+        var leA = document.getElementById("leLink");
+        var leB = document.getElementById("leTextLink");
+        if (leA) leA.href = "https://legalengine.co.uk/about-us" + qsString;
+        if (leB) leB.href = "https://legalengine.co.uk/about-us" + qsString;
       })();
     </script>
 
