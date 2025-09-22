@@ -183,17 +183,17 @@
         // ------- Greeting logic
         var hasIdentity = !!(normalizedName || company);
         var defaultGreeting =
-          "Hi there. I'm Lottie, one of the conference organisers here at PSMG. " +
-          "We're super excited to have you on board this year. True to the theme of this year's conference, " +
+          "Hi there. I'm Lottie, one of the Summit organisers here at PSMG. " +
+          "We're super excited to have you on board this year. True to the theme of this year's Summit, " +
           "we're continually finding ways to re-invent ourselves and have teamed up with Legal Engine to develop an agent " +
-          "(that's me by the way) to get your thoughts and interests ahead of the conference and help with any travel arrangements. " +
+          "(that's me by the way) to get your thoughts and interests ahead of the Summit and help with any travel arrangements. " +
           "May I please confirm who I'm speaking with?";
         var personalisedGreeting =
           "Hi " + (normalizedName ? normalizedName : "there") +
           (company ? " from " + company : "") +
-          ". I'm Lottie, one of the conference organisers here at PSMG. We're super excited to have you on board this year. " +
-          "True to the theme of this year's conference, we're continually finding ways to re-invent ourselves and have teamed up with Legal Engine " +
-          "to develop an agent (that's me by the way) to get your thoughts and interests ahead of the conference and help with any travel arrangements. " +
+          ". I'm Lottie, one of the Summit organisers here at PSMG. We're super excited to have you on board this year. " +
+          "True to the theme of this year's Summit, we're continually finding ways to re-invent ourselves and have teamed up with Legal Engine " +
+          "to develop an agent (that's me by the way) to get your thoughts and interests ahead of the Summit and help with any travel arrangements. " +
           "Shall we get started?";
         var firstMessage = hasIdentity ? personalisedGreeting : defaultGreeting;
 
