@@ -9,6 +9,7 @@
       h1 { font-size: 2rem; margin-bottom: 1rem; }
       img.logo { max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin: 1.5rem 0; }
       p { max-width: 600px; margin: 0 auto; }
+      .muted { color:#6b7280; font-size: 0.9rem; }
     </style>
   </head>
   <body>
@@ -16,37 +17,85 @@
     <img class="logo" src="https://www.psmg.co.uk/images/~resized-300x200/~resized-strch-download.jpg" alt="PSMG Logo" />
 
     <!-- ElevenLabs Agent Widget -->
+    <!-- We’ll set dynamic variables + greeting via JS before the widget initializes -->
     <elevenlabs-convai
       id="psmgAgent"
       agent-id="agent_6901k5h1cvv7fbvtex52v0a60fn4">
     </elevenlabs-convai>
 
+    <p class="muted" id="who"></p>
+
     <script>
       (function () {
-        // --- Read query params (?name=... &company=... or ?first=&last=)
-        var qs = new URLSearchParams(location.search);
-        function get(k){ return (qs.get(k) || "").replace(/[<>]/g, ""); }
-
-        var name = get("name").trim();
-        var first = get("first").trim();
-        var last = get("last").trim();
-        var company = get("company").trim();
-
-        if (!name) {
-          var parts = [first, last].filter(Boolean);
-          if (parts.length) name = parts.join(" ");
+        // ------- Helpers
+        var qs = new URLSearchParams(window.location.search);
+        function getQ(keys){
+          if (Array.isArray(keys)) { for (var i=0;i<keys.length;i++){ var v = qs.get(keys[i]); if(v) return v; } return ""; }
+          return qs.get(keys) || "";
+        }
+        function s(v){ return String(v || "").replace(/[<>]/g, ""); }
+        function splitName(full){
+          full = (full || "").trim();
+          if (!full) return { first:"", last:"" };
+          var parts = full.split(/\s+/);
+          var first = parts.shift() || "";
+          var last  = parts.join(" ");
+          return { first:first, last:last };
+        }
+        function uuid(){
+          // low-collision client id for stitching; not a cryptographic UUID
+          return 'cid_' + Math.random().toString(36).slice(2,10) + Date.now().toString(36);
         }
 
-        var hasName = !!name;
-        var hasCompany = !!company;
+        // ------- Read identity + UTM params
+        var fullName = s(getQ(["name","full_name","fullname"]));
+        var first    = s(getQ(["first","firstname","first_name","fname"]));
+        var last     = s(getQ(["last","lastname","last_name","lname"]));
+        var role     = s(getQ(["role","job_title","title","position"]));
+        var company  = s(getQ(["company","organisation","organization"]));
+        var email    = s(getQ(["email","e","mail"]));
 
-        // --- Dynamic variables for the agent
+        // Backfill first/last from full name if needed
+        if ((!first || !last) && fullName) {
+          var parts = splitName(fullName);
+          first = first || parts.first;
+          last  = last  || parts.last;
+        }
+        // Build/normalize full name
+        var normalizedName = (fullName || [first, last].filter(Boolean).join(" ")).trim();
+
+        // UTMs (optional)
+        var utm_source   = s(getQ(["utm_source","source"]));
+        var utm_medium   = s(getQ(["utm_medium","medium"]));
+        var utm_campaign = s(getQ(["utm_campaign","campaign"]));
+        var utm_term     = s(getQ(["utm_term","term"]));
+        var utm_content  = s(getQ(["utm_content","content"]));
+
+        // Stitching id to correlate this page view & the call/session server-side
+        var client_id = s(getQ("client_id")) || (localStorage.getItem("psmg_client_id") || uuid());
+        try { localStorage.setItem("psmg_client_id", client_id); } catch(e){}
+
+        // ------- Dynamic variables for the Agent (these become available in your agent prompts & webhooks)
         var dyn = {
-          customer_name: name || "",
-          company: company || ""
+          // Identity
+          first_name: first || "",
+          last_name:  last  || "",
+          full_name:  normalizedName || "",
+          role:       role || "",
+          company:    company || "",
+          email:      email || "",
+          client_id:  client_id,
+
+          // UTMs
+          utm_source:  utm_source || "",
+          utm_medium:  utm_medium || "",
+          utm_campaign:utm_campaign || "",
+          utm_term:    utm_term || "",
+          utm_content: utm_content || ""
         };
 
-        // --- New greetings
+        // ------- Greeting logic
+        var hasIdentity = !!(normalizedName || company);
         var defaultGreeting =
           "Hi there. I'm Lottie, one of the conference organisers here at PSMG. " +
           "We're super excited to have you on board this year. True to the theme of this year's conference, " +
@@ -55,21 +104,57 @@
           "May I please confirm who I'm speaking with?";
 
         var personalisedGreeting =
-          "Hi " + (hasName ? name : "there") +
-          (hasCompany ? " from " + company : "") +
+          "Hi " + (normalizedName ? normalizedName : "there") +
+          (company ? " from " + company : "") +
           ". I'm Lottie, one of the conference organisers here at PSMG. We're super excited to have you on board this year. " +
           "True to the theme of this year's conference, we're continually finding ways to re-invent ourselves and have teamed up with Legal Engine " +
           "to develop an agent (that's me by the way) to get your thoughts and interests ahead of the conference and help with any travel arrangements. " +
           "Shall we get started?";
 
-        // If we already know who they are (via query params), use the personalised opener; otherwise use the identity-confirming version
-        var firstMessage = (hasName || hasCompany) ? personalisedGreeting : defaultGreeting;
+        var firstMessage = hasIdentity ? personalisedGreeting : defaultGreeting;
 
-        // --- Apply to widget before it initializes
+        // Optional: show who we think they are (for your debugging)
+        var who = document.getElementById("who");
+        if (who && (normalizedName || company)) {
+          who.textContent = "Detected: " + [normalizedName, company ? "("+company+")" : ""].filter(Boolean).join(" ");
+        }
+
+        // ------- Apply to the widget BEFORE it initializes
         var widget = document.getElementById("psmgAgent");
         if (widget) {
           widget.setAttribute("dynamic-variables", JSON.stringify(dyn));
           widget.setAttribute("override-first-message", firstMessage);
+        }
+
+        // ------- Save to your n8n webhook so you can use these in post-call email summaries
+        // The webhook can upsert the contact, attach UTMs, and later merge the same fields into your email.
+        try {
+          var payload = new URLSearchParams();
+          payload.set("event", "landing_context");
+          payload.set("client_id", client_id);
+          payload.set("first_name", dyn.first_name);
+          payload.set("last_name",  dyn.last_name);
+          payload.set("full_name",  dyn.full_name);
+          payload.set("role",       dyn.role);
+          payload.set("company",    dyn.company);
+          payload.set("email",      dyn.email);
+          payload.set("utm_source", utm_source);
+          payload.set("utm_medium", utm_medium);
+          payload.set("utm_campaign", utm_campaign);
+          payload.set("utm_term",   utm_term);
+          payload.set("utm_content",utm_content);
+          payload.set("page_url",   location.href);
+          payload.set("referrer",   document.referrer || "");
+          payload.set("user_agent", navigator.userAgent || "");
+
+          // Your preferred webhook from earlier threads:
+          fetch("https://leonard-dev.app.n8n.cloud/webhook/luke-pre-brief", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: payload.toString()
+          }).catch(function(){ /* no-op */ });
+        } catch (e) {
+          console.warn("Pre-brief logging failed", e);
         }
       })();
     </script>
@@ -78,3 +163,4 @@
     <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
   </body>
 </html>
+
