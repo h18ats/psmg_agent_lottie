@@ -2,29 +2,153 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Lottie PSMG Summit Agent</title>
+    <title>Lottie · PSMG Summit Assistant</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="light dark">
     <style>
-      body { font-family: system-ui, Arial, sans-serif; margin: 2rem; line-height: 1.6; background: #f9fafb; color: #111827; text-align: center; }
-      h1 { font-size: 2rem; margin-bottom: 1rem; }
-      img.logo { max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin: 1.5rem 0; }
-      p { max-width: 600px; margin: 0 auto; }
-      .muted { color:#6b7280; font-size: 0.9rem; }
+      /* ===== PSMG look & feel ===== */
+      :root{
+        --psmg-navy:#0b1f3b;
+        --psmg-navy-2:#102a52;
+        --psmg-blue:#3b82f6;
+        --ink:#0f172a;
+        --muted:#64748b;
+        --bg:#f4f6fb;
+        --card:#ffffff;
+        --border:#e5e7eb;
+      }
+      *{box-sizing:border-box}
+      html,body{margin:0;padding:0}
+      body{
+        font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+        background:var(--bg);
+        color:var(--ink);
+        line-height:1.6;
+      }
+
+      /* Header */
+      .header{
+        background:linear-gradient(180deg,var(--psmg-navy),var(--psmg-navy-2));
+        padding:20px 16px;
+        border-bottom:1px solid rgba(255,255,255,.12);
+      }
+      .header .wrap{
+        max-width:960px;margin:0 auto;display:flex;align-items:center;gap:16px;
+      }
+      .logo{
+        display:block;width:auto;max-height:56px;border-radius:12px;
+        box-shadow:0 4px 12px rgba(0,0,0,.15);
+        background:#fff
+      }
+      .brand-title{
+        color:#e6eefb;font-weight:700;letter-spacing:.3px;margin:0;font-size:18px
+      }
+
+      /* Main container */
+      .main{max-width:960px;margin:26px auto;padding:0 16px}
+      .hero{
+        display:grid;grid-template-columns:1.05fr .95fr;gap:22px;align-items:center;
+      }
+      .card{
+        background:var(--card);border:1px solid var(--border);border-radius:14px;
+        box-shadow:0 10px 24px rgba(15,23,42,.06);
+      }
+      .card-pad{padding:18px}
+      .badge{
+        display:inline-block;padding:6px 10px;border-radius:999px;
+        background:#e0ecff;border:1px solid #cfe0ff;color:#0b1f3b;font-size:12px
+      }
+      h1{margin:.4rem 0 .2rem;font-size:clamp(24px,4vw,32px);line-height:1.2;color:var(--psmg-navy)}
+      .lead{color:#334155;font-size:16px;margin:0 0 10px}
+      .muted{color:var(--muted);font-size:14px}
+      .cta{
+        display:flex;gap:10px;flex-wrap:wrap;margin-top:10px
+      }
+      .btn{
+        display:inline-flex;align-items:center;justify-content:center;
+        padding:12px 16px;border-radius:10px;text-decoration:none;font-weight:700;
+        border:1px solid transparent;cursor:pointer
+      }
+      .btn.primary{background:var(--psmg-blue);color:#fff}
+      .btn.ghost{background:#e0ecff;color:var(--psmg-navy);border-color:#cfe0ff}
+
+      /* Widget container */
+      .widget-shell{padding:0}
+      .widget-head{
+        padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center
+      }
+      .widget-body{padding:14px 18px}
+      .foot{
+        margin:22px auto 28px;max-width:960px;padding:0 16px;color:var(--muted);font-size:13px;text-align:center
+      }
+
+      /* Responsive */
+      @media (max-width: 900px){
+        .hero{grid-template-columns:1fr}
+      }
+
+      /* Dark mode tweaks */
+      @media (prefers-color-scheme:dark){
+        :root{
+          --bg:#0b1329; --card:#121a34; --border:#2a3865; --ink:#e8eef7; --muted:#a9b5d2;
+        }
+        .logo{background:#fff}
+      }
     </style>
   </head>
   <body>
-    <!-- Logo image -->
-    <img class="logo" src="https://www.psmg.co.uk/images/~resized-300x200/~resized-strch-download.jpg" alt="PSMG Logo" />
+    <!-- ===== Header ===== -->
+    <header class="header">
+      <div class="wrap">
+        <a href="https://www.psmg.co.uk/" target="_blank" rel="noopener">
+          <img class="logo" src="https://www.psmg.co.uk/images/~resized-300x200/~resized-strch-download.jpg" alt="PSMG Logo" height="56">
+        </a>
+        <h1 class="brand-title">PSMG Summit Assistant</h1>
+      </div>
+    </header>
 
-    <!-- ElevenLabs Agent Widget -->
-    <!-- We’ll set dynamic variables + greeting via JS before the widget initializes -->
-    <elevenlabs-convai
-      id="psmgAgent"
-      agent-id="agent_6901k5h1cvv7fbvtex52v0a60fn4">
-    </elevenlabs-convai>
+    <!-- ===== Main ===== -->
+    <main class="main">
+      <section class="hero">
+        <!-- Left: intro -->
+        <div class="card card-pad">
+          <span class="badge">2025 London Summit · Reinvention</span>
+          <h1>Talk to Lottie</h1>
+          <p class="lead">
+            Share your interests, logistics and preferences ahead of the Summit so we can tailor your day.
+          </p>
+          <p class="muted">
+            If you arrived from our email, your details should pre-fill automatically. Otherwise you can proceed and Lottie will confirm who she’s speaking with.
+          </p>
+          <div class="cta">
+            <a class="btn primary" href="#start">Start now</a>
+            <a class="btn ghost" href="https://www.psmg.co.uk/Events/" target="_blank" rel="noopener">Event info</a>
+          </div>
+        </div>
 
-    <p class="muted" id="who"></p>
+        <!-- Right: widget -->
+        <div id="start" class="card widget-shell">
+          <div class="widget-head">
+            <strong style="color:var(--psmg-navy)">Live assistant</strong>
+            <span class="muted" id="who"></span>
+          </div>
+          <div class="widget-body">
+            <!-- ElevenLabs Agent Widget -->
+            <!-- We set dynamic variables + greeting via JS before the widget initializes -->
+            <elevenlabs-convai
+              id="psmgAgent"
+              agent-id="agent_6901k5h1cvv7fbvtex52v0a60fn4">
+            </elevenlabs-convai>
+          </div>
+        </div>
+      </section>
+    </main>
 
+    <div class="foot">
+      © 2025 PSMG · One Moorgate Place, London · Built with Legal Engine
+    </div>
+
+    <!-- ===== Behaviour / Personalisation ===== -->
     <script>
       (function () {
         // ------- Helpers
@@ -43,7 +167,6 @@
           return { first:first, last:last };
         }
         function uuid(){
-          // low-collision client id for stitching; not a cryptographic UUID
           return 'cid_' + Math.random().toString(36).slice(2,10) + Date.now().toString(36);
         }
 
@@ -55,13 +178,11 @@
         var company  = s(getQ(["company","organisation","organization"]));
         var email    = s(getQ(["email","e","mail"]));
 
-        // Backfill first/last from full name if needed
         if ((!first || !last) && fullName) {
           var parts = splitName(fullName);
           first = first || parts.first;
           last  = last  || parts.last;
         }
-        // Build/normalize full name
         var normalizedName = (fullName || [first, last].filter(Boolean).join(" ")).trim();
 
         // UTMs (optional)
@@ -71,13 +192,12 @@
         var utm_term     = s(getQ(["utm_term","term"]));
         var utm_content  = s(getQ(["utm_content","content"]));
 
-        // Stitching id to correlate this page view & the call/session server-side
+        // Correlation id
         var client_id = s(getQ("client_id")) || (localStorage.getItem("psmg_client_id") || uuid());
         try { localStorage.setItem("psmg_client_id", client_id); } catch(e){}
 
-        // ------- Dynamic variables for the Agent (these become available in your agent prompts & webhooks)
+        // ------- Dynamic variables for the Agent
         var dyn = {
-          // Identity
           first_name: first || "",
           last_name:  last  || "",
           full_name:  normalizedName || "",
@@ -85,8 +205,6 @@
           company:    company || "",
           email:      email || "",
           client_id:  client_id,
-
-          // UTMs
           utm_source:  utm_source || "",
           utm_medium:  utm_medium || "",
           utm_campaign:utm_campaign || "",
@@ -113,10 +231,10 @@
 
         var firstMessage = hasIdentity ? personalisedGreeting : defaultGreeting;
 
-        // Optional: show who we think they are (for your debugging)
+        // Show detected visitor (small, top-right of widget card)
         var who = document.getElementById("who");
         if (who && (normalizedName || company)) {
-          who.textContent = "Detected: " + [normalizedName, company ? "("+company+")" : ""].filter(Boolean).join(" ");
+          who.textContent = [normalizedName, company ? "· " + company : ""].filter(Boolean).join(" ");
         }
 
         // ------- Apply to the widget BEFORE it initializes
@@ -126,8 +244,7 @@
           widget.setAttribute("override-first-message", firstMessage);
         }
 
-        // ------- Save to your n8n webhook so you can use these in post-call email summaries
-        // The webhook can upsert the contact, attach UTMs, and later merge the same fields into your email.
+        // ------- Save to your n8n webhook for post-call summaries
         try {
           var payload = new URLSearchParams();
           payload.set("event", "landing_context");
@@ -147,20 +264,18 @@
           payload.set("referrer",   document.referrer || "");
           payload.set("user_agent", navigator.userAgent || "");
 
-          // Your preferred webhook from earlier threads:
           fetch("https://leonard-dev.app.n8n.cloud/webhook/luke-pre-brief", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: payload.toString()
-          }).catch(function(){ /* no-op */ });
+          }).catch(function(){});
         } catch (e) {
           console.warn("Pre-brief logging failed", e);
         }
       })();
     </script>
 
-    <!-- Load the ElevenLabs widget -->
+    <!-- ElevenLabs widget embed -->
     <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
   </body>
 </html>
-
