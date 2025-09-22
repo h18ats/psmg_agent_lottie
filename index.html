@@ -38,6 +38,11 @@
       .partner{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin-top:12px}
       .partner small{color:var(--muted)}
       .le-logo{height:28px;max-width:180px;object-fit:contain;display:block}
+
+      /* 🔸 Make the ElevenLabs widget roughly 2× taller */
+      elevenlabs-convai{display:block;width:100%;height:720px;}         /* desktop/tablet */
+      @media (max-width: 640px){ elevenlabs-convai{ height:560px; } }   /* mobile: still bigger but sensible */
+
       @media (max-width:800px){
         .fields{grid-template-columns:1fr}
       }
@@ -247,3 +252,4 @@
     <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
   </body>
 </html>
+
