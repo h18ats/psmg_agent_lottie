@@ -14,8 +14,7 @@
         --accent:#3b82f6;
         --border:#e5e7eb;
       }
-      /* Basic, on-brand look aligned to psmg.co.uk */
-      html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;}
+      html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:-apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;}
       .wrap{max-width:960px;margin:0 auto;padding:24px}
       .header{background:var(--navy);border-bottom:1px solid #0a1a32}
       .header .inner{max-width:960px;margin:0 auto;padding:12px 24px;text-align:center}
@@ -28,21 +27,21 @@
       .fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
       .field{display:flex;flex-direction:column;gap:6px;text-align:left}
       label{font-size:12px;color:#334155}
-      /* Editable inputs (pre-populated by JS, but user can change them) */
       input[type="text"]{background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:10px 12px;color:#0f172a}
       .cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:16px}
       .btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:12px 16px;border-radius:10px;font-weight:700}
       .btn.secondary{background:#e0ecff;color:#0b1f3b}
-      .divider{height:1px;background:var(--border);margin:6px 0}
+      .divider{height:1px;background:var(--border);margin:16px 0}
       .center{text-align:center}
-      /* Partner strip (now lives inside the first content card) */
+
+      /* Powered by block (now inside the single card) */
       .partner{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin-top:12px}
       .partner small{color:var(--muted)}
       .le-logo{height:28px;max-width:180px;object-fit:contain;display:block}
+
       @media (max-width:800px){
         .fields{grid-template-columns:1fr}
       }
-      /* Dark mode nicety */
       @media (prefers-color-scheme: dark){
         :root{ --bg:#0b1329; --card:#121a34; --ink:#e8eef7; --border:#2a3865; --muted:#a9b5d2 }
         .logo{background:transparent; box-shadow:none}
@@ -67,7 +66,7 @@
       <h1>PSMG Full Day London Summit</h1>
       <p class="lead">Thriving in an age of continuous reinvention</p>
 
-      <!-- Identity + Summit website + Powered by (all in the SAME card/div) -->
+      <!-- SINGLE CARD: identity + summit link + powered by + agent widget -->
       <div class="card section" style="margin-top:10px">
         <p class="muted center" style="margin-top:0">Your details (from the link) — you can edit these before starting</p>
 
@@ -97,7 +96,7 @@
           </a>
         </div>
 
-        <!-- Powered by block MOVED here (same div as the copy) -->
+        <!-- Powered by block (same div as copy) -->
         <div class="partner" id="poweredBy">
           <small><b>Powered by</b></small>
           <a id="leLink" href="https://legalengine.co.uk/about-us" target="_blank" rel="noopener" aria-label="About Legal Engine">
@@ -105,10 +104,10 @@
           </a>
           <a id="leTextLink" class="btn secondary" href="https://legalengine.co.uk/about-us" target="_blank" rel="noopener">About Legal Engine</a>
         </div>
-      </div>
 
-      <!-- Agent widget card (partner strip removed from here) -->
-      <div class="card section" style="margin-top:16px">
+        <div class="divider" aria-hidden="true"></div>
+
+        <!-- Agent widget moved into this same card -->
         <p class="muted center" id="who" style="margin:0 0 10px"></p>
         <elevenlabs-convai
           id="psmgAgent"
@@ -134,9 +133,7 @@
           var last  = parts.join(" ");
           return { first:first, last:last };
         }
-        function uuid(){
-          return 'cid_' + Math.random().toString(36).slice(2,10) + Date.now().toString(36);
-        }
+        function uuid(){ return 'cid_' + Math.random().toString(36).slice(2,10) + Date.now().toString(36); }
 
         // ------- Read identity + UTM params
         var fullName = s(getQ(["name","full_name","fullname"]));
@@ -168,13 +165,12 @@
         document.getElementById("f_email").value     = email || "";
         document.getElementById("f_role").value      = role || "";
 
-        // ------- Dynamic variables for the Agent
+        // ------- Build dynamic variables from CURRENT inputs (so edits flow through)
         function currentDyn(){
-          // Always read the current inputs so edits are respected
-          var nameNow   = document.getElementById("f_full_name").value.trim();
-          var roleNow   = document.getElementById("f_role").value.trim();
-          var companyNow= document.getElementById("f_company").value.trim();
-          var emailNow  = document.getElementById("f_email").value.trim();
+          var nameNow    = document.getElementById("f_full_name").value.trim();
+          var roleNow    = document.getElementById("f_role").value.trim();
+          var companyNow = document.getElementById("f_company").value.trim();
+          var emailNow   = document.getElementById("f_email").value.trim();
           var parts = splitName(nameNow);
           return {
             first_name: parts.first || first || "",
@@ -215,7 +211,7 @@
           widget.setAttribute("override-first-message", firstMessage);
         }
 
-        // If the user edits fields, keep the widget’s dynamic variables fresh
+        // Keep widget's dynamic variables fresh on any edit
         ["f_full_name","f_role","f_company","f_email"].forEach(function(id){
           var el = document.getElementById(id);
           if (!el) return;
@@ -248,7 +244,7 @@
           }).catch(function(){});
         } catch(e){}
 
-        // --- Append current querystring to Legal Engine About links (so UTMs follow)
+        // Append current querystring to Legal Engine About links (UTMs follow)
         var qsString = window.location.search || "";
         var leA = document.getElementById("leLink");
         var leB = document.getElementById("leTextLink");
