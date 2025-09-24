@@ -1,230 +1,189 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Lottie · PSMG Summit Agent</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <style>
-      :root{
-        --navy:#0b1f3b;
-        --ink:#0f172a;
-        --muted:#64748b;
-        --bg:#f4f6fb;
-        --card:#ffffff;
-        --accent:#3b82f6;
-        --border:#e5e7eb;
-      }
-      /* Basic, on-brand look aligned to psmg.co.uk */
-      html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;}
-      .wrap{max-width:960px;margin:0 auto;padding:24px}
-      .header{background:var(--navy);border-bottom:1px solid #0a1a32}
-      .header .inner{max-width:960px;margin:0 auto;padding:12px 24px;text-align:center}
-      .logo{max-width:200px;height:auto;display:inline-block;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,.10);background:#fff}
-      h1{font-size:26px;margin:16px 0 6px;text-align:center;color:var(--navy)}
-      p.lead{margin:0 auto 14px;text-align:center;max-width:720px;color:#334155}
-      .card{background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:0 6px 20px rgba(15,23,42,.06)}
-      .section{padding:18px 20px}
-      .muted{color:var(--muted);font-size:14px}
-      .fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-      .field{display:flex;flex-direction:column;gap:6px;text-align:left}
-      label{font-size:12px;color:#334155}
-      input[readonly]{background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:10px 12px;color:#0f172a}
-      .cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:16px}
-      .btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:12px 16px;border-radius:10px;font-weight:700}
-      .btn.secondary{background:#e0ecff;color:#0b1f3b}
-      .divider{height:1px;background:var(--border);margin:6px 0}
-      .center{text-align:center}
-      /* Partner strip */
-      .partner{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin-top:12px}
-      .partner small{color:var(--muted)}
-      .le-logo{height:28px;max-width:180px;object-fit:contain;display:block}
-      @media (max-width:800px){
-        .fields{grid-template-columns:1fr}
-      }
-      /* Dark mode nicety */
-      @media (prefers-color-scheme: dark){
-        :root{ --bg:#0b1329; --card:#121a34; --ink:#e8eef7; --border:#2a3865; --muted:#a9b5d2 }
-        .logo{background:transparent; box-shadow:none}
-        h1{color:#cfe0ff}
-        input[readonly]{background:#0f1730;border-color:#2a3865;color:#e8eef7}
-        .btn.secondary{background:#203566;color:#e8eef7}
-        .partner{background:#0f1730;border-color:#2a3865}
-      }
-    </style>
-  </head>
-  <body>
-    <!-- Brand header -->
-    <div class="header">
-      <div class="inner">
-        <a href="https://www.psmg.co.uk/" target="_blank" rel="noopener">
-          <img class="logo" src="https://www.psmg.co.uk/images/~resized-300x200/~resized-strch-download.jpg" alt="PSMG Logo">
-        </a>
-      </div>
-    </div>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <title>The 2025 PSMG Full Day London Summit: Thriving in an age of continuous reinvention</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="x-apple-disable-message-reformatting" content="yes">
+  <!-- Webfont (safe fallback provided) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Enhancements only; layout uses tables/inline styles */
+    @media screen and (max-width:600px){
+      .container{width:100% !important}
+      .px{padding-left:20px !important;padding-right:20px !important}
+      .stack{display:block !important;width:100% !important}
+      .center{text-align:center !important}
+      .pr0{padding-right:0 !important}
+      .pl0{padding-left:0 !important}
+    }
+    /* Optional dark mode adjustments (in clients that support it) */
+    @media (prefers-color-scheme: dark){
+      body, table, td{ background:#0b1329 !important; color:#e8eef7 !important }
+      .card{ background:#121a34 !important; border-color:#2a3865 !important }
+      .muted{ color:#a9b5d2 !important }
+      a{ color:#8ec1ff !important }
+    }
+  </style>
+</head>
+<body style="margin:0; padding:0; background:#f4f6fb; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; font-family:'Inter', -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; color:#0f172a;" bgcolor="#f4f6fb">
 
-    <div class="wrap">
-      <h1>PSMG Full Day London Summit</h1>
-      <p class="lead">Thriving in an age of continuous reinvention</p>
+  <!-- Preheader (hidden preview text) -->
+  <div style="display:none; max-height:0; overflow:hidden; font-size:1px; line-height:1px; color:#f4f6fb;">
+    Thanks for speaking with Lottie. Your tailored suggestions for the PSMG London Summit are inside.
+  </div>
 
-      <!-- Prefilled identity (read-only) + Summit website -->
-      <div class="card section" style="margin-top:10px">
-        <p class="muted center" style="margin-top:0">Your details (from the link) — for your peace of mind</p>
-        <div class="fields" style="margin-top:8px">
-          <div class="field">
-            <label>Full name</label>
-            <input id="f_full_name" type="text" readonly placeholder="(not provided)">
-          </div>
-          <div class="field">
-            <label>Company</label>
-            <input id="f_company" type="text" readonly placeholder="(not provided)">
-          </div>
-          <div class="field">
-            <label>Email</label>
-            <input id="f_email" type="text" readonly placeholder="(not provided)">
-          </div>
-          <div class="field">
-            <label>Job role</label>
-            <input id="f_role" type="text" readonly placeholder="(not provided)">
-          </div>
-        </div>
-        <div class="cta">
-          <a class="btn" href="https://www.psmg.co.uk/Events/33684-/The-2025-PSMG-Full-Day-London-Summit-Thriving-in-an-age-of-continuous-reinvention" target="_blank" rel="noopener">
-            Summit website
-          </a>
-                    <small><b></b>Powered by </b></small>
-          <a id="leLink" href="https://legalengine.co.uk/about-us" target="_blank" rel="noopener" aria-label="About Legal Engine">
-            <img class="le-logo" src="https://legalengine.co.uk/hs-fs/hubfs/e8ad0e08-aa6c-4d44-9053-cdcf7bbaec5b.png?width=1704&height=678&name=e8ad0e08-aa6c-4d44-9053-cdcf7bbaec5b.png" alt="Legal Engine">
-          </a>
-          <a id="leTextLink" class="btn secondary" href="https://legalengine.co.uk/about-us" target="_blank" rel="noopener">About Legal Engine</a>
-        </div>
-      </div>
-    </div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4f6fb;" bgcolor="#f4f6fb">
+    <tr>
+      <td align="center" style="padding:24px;">
+        <table role="presentation" class="container" width="700" cellpadding="0" cellspacing="0" border="0" style="width:700px; max-width:700px; background:#ffffff; border-radius:12px; overflow:hidden; box-shadow:0 6px 24px rgba(15,23,42,0.08);" bgcolor="#ffffff">
 
-    <script>
-      (function () {
-        // ------- Helpers
-        var qs = new URLSearchParams(window.location.search);
-        function getQ(keys){
-          if (Array.isArray(keys)) { for (var i=0;i<keys.length;i++){ var v = qs.get(keys[i]); if(v) return v; } return ""; }
-          return qs.get(keys) || "";
-        }
-        function s(v){ return String(v || "").replace(/[<>]/g, ""); }
-        function splitName(full){
-          full = (full || "").trim();
-          if (!full) return { first:"", last:"" };
-          var parts = full.split(/\s+/);
-          var first = parts.shift() || "";
-          var last  = parts.join(" ");
-          return { first:first, last:last };
-        }
-        function uuid(){
-          return 'cid_' + Math.random().toString(36).slice(2,10) + Date.now().toString(36);
-        }
+          <!-- ==== HEADER (Outlook-safe; ONLY PSMG block; 36px logo) ==== -->
+          <tr>
+            <td style="background:#0b1f3b; padding:12px 24px;" bgcolor="#0b1f3b">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                     style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; background:#0b1f3b;" bgcolor="#0b1f3b">
+                <tr>
+                  <td align="left" valign="middle" style="background:#0b1f3b;" bgcolor="#0b1f3b">
+                    <!--[if mso]>
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+                      <tr><td>
+                        <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" arcsize="12%" fillcolor="#ffffff" strokecolor="#ffffff" strokeweight="0"
+                                     style="v-text-anchor:middle; display:inline-block;">
+                          <v:textbox inset="10pt,8pt,10pt,8pt">
+                            <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+                              <tr>
+                                <td align="left" valign="middle">
+                                  <a href="https://www.psmg.co.uk/" target="_blank" style="text-decoration:none;">
+                                    <img src="https://www.psmg.co.uk/images/~resized-300x200/~resized-strch-download.jpg"
+                                         height="36" alt="PSMG"
+                                         style="display:block; border:0; outline:none; text-decoration:none; -ms-interpolation-mode:bicubic; height:36px; width:auto;">
+                                  </a>
+                                </td>
+                              </tr>
+                            </table>
+                          </v:textbox>
+                        </v:roundrect>
+                      </td></tr>
+                    </table>
+                    <![endif]-->
+                    <!--[if !mso]><!-->
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0"
+                           style="border-collapse:separate; background:#ffffff; border-radius:10px;">
+                      <tr>
+                        <td align="left" valign="middle" style="padding:10px 12px;">
+                          <a href="https://www.psmg.co.uk/" target="_blank" style="text-decoration:none;">
+                            <img src="https://www.psmg.co.uk/images/~resized-300x200/~resized-strch-download.jpg"
+                                 height="36" alt="PSMG"
+                                 style="display:block; border:0; outline:none; text-decoration:none; height:36px; width:auto;">
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                    <!--<![endif]-->
+                  </td>
 
-        // ------- Read identity + UTM params
-        var fullName = s(getQ(["name","full_name","fullname"]));
-        var first    = s(getQ(["first","firstname","first_name","fname"]));
-        var last     = s(getQ(["last","lastname","last_name","lname"]));
-        var role     = s(getQ(["role","job_title","title","position"]));
-        var company  = s(getQ(["company","organisation","organization"]));
-        var email    = s(getQ(["email","e","mail"]));
+                  <!-- No right-hand white box anymore -->
+                  <td style="background:#0b1f3b;" bgcolor="#0b1f3b"></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <!-- ==== /HEADER ==== -->
 
-        if ((!first || !last) && fullName) {
-          var parts = splitName(fullName);
-          first = first || parts.first;
-          last  = last  || parts.last;
-        }
-        var normalizedName = (fullName || [first, last].filter(Boolean).join(" ")).trim();
+          <!-- Title / intro -->
+          <tr>
+            <td class="px" style="padding:24px 32px 6px;">
+              <h1 style="margin:0 0 8px; font-size:24px; line-height:1.25; color:#0b1f3b;">The 2025 PSMG Full Day London Summit: Thriving in an age of continuous reinvention</h1>
+            </td>
+          </tr>
 
-        var utm_source   = s(getQ(["utm_source","source"]));
-        var utm_medium   = s(getQ(["utm_medium","medium"]));
-        var utm_campaign = s(getQ(["utm_campaign","campaign"]));
-        var utm_term     = s(getQ(["utm_term","term"]));
-        var utm_content  = s(getQ(["utm_content","content"]));
+          <!-- Body -->
+          <tr>
+            <td class="px" style="padding:0 32px 8px;">
+              <p style="margin:0 0 14px; font-size:16px; line-height:1.6;">
+                Hi there {{ $('PSMG Event Webhook').item.json.body.data.conversation_initiation_client_data.dynamic_variables.first_name }},
+              </p>
 
-        var client_id = s(getQ("client_id")) || (localStorage.getItem("psmg_client_id") || uuid());
-        try { localStorage.setItem("psmg_client_id", client_id); } catch(e){}
+              <p style="margin:0 0 14px; font-size:16px; line-height:1.6; color:#334155;">
+                Thanks for taking the time to speak with me ahead of the PSMG London Summit. Based on our conversation, I have pulled together some suggestions below including recommended sessions to attend and people to speak to. For further information, please visit the
+                <a href="https://www.psmg.co.uk/Events/33684-/The-2025-PSMG-Full-Day-London-Summit-Thriving-in-an-age-of-continuous-reinvention" target="_blank" rel="noopener noreferrer" style="color:#3b82f6; text-decoration:none; font-weight:600;">website.</a>
+              </p>
 
-        // ------- Prefill read-only boxes (show the UTM values have passed)
-        document.getElementById("f_full_name").value = normalizedName || "";
-        document.getElementById("f_company").value   = company || "";
-        document.getElementById("f_email").value     = email || "";
-        document.getElementById("f_role").value      = role || "";
+              <!-- NEW: Powered by block directly under the link (no white box/pill) -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 18px 0; border-collapse:collapse;">
+                <tr>
+                  <td style="font-size:12px; font-weight:600; color:#475569; padding:0 0 4px 0; font-family:Segoe UI, Arial, Helvetica, sans-serif;">
+                    Powered by
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:0;">
+                    <a href="https://legalengine.co.uk/about-us" target="_blank" style="text-decoration:none;">
+                      <img src="https://legalengine.co.uk/hs-fs/hubfs/e8ad0e08-aa6c-4d44-9053-cdcf7bbaec5b.png?width=1704&height=678&name=e8ad0e08-aa6c-4d44-9053-cdcf7bbaec5b.png"
+                           height="28" alt="Legal Engine"
+                           style="display:block; border:0; outline:none; text-decoration:none; height:28px; width:auto; -ms-interpolation-mode:bicubic;">
+                    </a>
+                  </td>
+                </tr>
+              </table>
 
-        // ------- Dynamic variables for the Agent
-        var dyn = {
-          first_name: first || "",
-          last_name:  last  || "",
-          full_name:  normalizedName || "",
-          role:       role || "",
-          company:    company || "",
-          email:      email || "",
-          client_id:  client_id,
-          utm_source:  utm_source || "",
-          utm_medium:  utm_medium || "",
-          utm_campaign:utm_campaign || "",
-          utm_term:    utm_term || "",
-          utm_content: utm_content || ""
-        };
+              <p style="margin:0 0 14px; font-size:16px; line-height:1.6; color:#334155;">
+                Enjoy the summit!
+              </p>
+            </td>
+          </tr>
 
-        // ------- Greeting logic
-        var hasIdentity = !!(normalizedName || company);
-        var defaultGreeting =
-          "Hi there. I'm Lottie, one of the Summit organisers here at PSMG. " +
-          "We're super excited to have you on board this year. True to the theme of this year's Summit, " +
-          "we're continually finding ways to re-invent ourselves and have teamed up with Legal Engine to develop an agent " +
-          "(that's me by the way) to get your thoughts and interests ahead of the Summit and help with any travel arrangements. " +
-          "May I please confirm who I'm speaking with?";
-        var personalisedGreeting =
-          "Hi " + (first ? first : "there") +
-          (company ? " from " + company : "") +
-          ". I'm Lottie, one of the Summit organisers here at PSMG. We're super excited to have you on board this year. " +
-          "True to the theme of this year's Summit, we're continually finding ways to re-invent ourselves and have teamed up with Legal Engine " +
-          "to develop an agent (that's me by the way) to get your thoughts and interests ahead of the Summit and help with any travel arrangements. " +
-          "Shall we get started?";
-        var firstMessage = hasIdentity ? personalisedGreeting : defaultGreeting;
+          <!-- Sign-off -->
+          <tr>
+            <td class="px" style="padding:0 32px 8px;">
+              <div class="signature" style="font-size:16px; line-height:1.6; color:#0f172a;">
+                <p><b>Lottie</b></p>
+                <p>Events AI Assistant<br>PSMG<br>Powered by Legal Engine</p><br>
+              </div>
+            </td>
+          </tr>
 
-        var widget = document.getElementById("psmgAgent");
-        if (widget) {
-          widget.setAttribute("dynamic-variables", JSON.stringify(dyn));
-          widget.setAttribute("override-first-message", firstMessage);
-        }
+          <!-- Summary card -->
+          <tr>
+            <td class="px" style="padding:0 32px 16px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="card" style="border:1px solid #e5e7eb; background:#f8fafc; border-radius:10px;" bgcolor="#f8fafc">
+                <tr>
+                  <td style="padding:16px;">
+                    <div style="font-size:15px; line-height:1.6; color:#0f172a;">
+                      {{ $json.output }}
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
 
-        // Optional: log to n8n (minimal)
-        try {
-          var payload = new URLSearchParams();
-          payload.set("event","landing_context");
-          payload.set("client_id", client_id);
-          payload.set("first_name", dyn.first_name);
-          payload.set("last_name",  dyn.last_name);
-          payload.set("full_name",  dyn.full_name);
-          payload.set("role",       dyn.role);
-          payload.set("company",    dyn.company);
-          payload.set("email",      dyn.email);
-          payload.set("utm_source", utm_source);
-          payload.set("utm_medium", utm_medium);
-          payload.set("utm_campaign", utm_campaign);
-          payload.set("utm_term",   utm_term);
-          payload.set("utm_content",utm_content);
-          payload.set("page_url",   location.href);
-          fetch("https://leonard-dev.app.n8n.cloud/webhook/luke-pre-brief", {
-            method:"POST",
-            headers:{ "Content-Type":"application/x-www-form-urlencoded" },
-            body: payload.toString()
-          }).catch(function(){});
-        } catch(e){}
+          <!-- Closing paragraph -->
+          <tr>
+            <td class="px" style="padding:0 32px 24px;">
+              <p style="margin:0; font-size:15px; line-height:1.6; color:#334155;">
+                If you have enjoyed talking to Lottie and would like to explore employing her for your own event, please get in touch with the Legal Engine team by dropping us an email to info@legalengine.co.uk and/or come and say hello at the Summit!
+              </p>
+            </td>
+          </tr>
 
-        // --- Append current querystring to Legal Engine About links (so UTMs follow)
-        var qsString = window.location.search || "";
-        var leA = document.getElementById("leLink");
-        var leB = document.getElementById("leTextLink");
-        if (leA) leA.href = "https://legalengine.co.uk/about-us" + qsString;
-        if (leB) leB.href = "https://legalengine.co.uk/about-us" + qsString;
-      })();
-    </script>
+          <!-- Footer with Unsubscribe -->
+          <tr>
+            <td style="padding:16px 24px 22px; border-top:1px solid #e5e7eb; text-align:center;">
+              <p class="muted" style="margin:0; font-size:12px; color:#64748b;">
+                © 2025 PSMG ·
+                <a href="https://www.psmg.co.uk/" target="_blank" style="color:#3b82f6; text-decoration:none;">psmg.co.uk</a> ·
+                <a href="https://legalengine.co.uk/about-us" target="_blank" style="color:#3b82f6; text-decoration:none;">About Legal Engine</a> ·
+                <a href="mailto:info@legalengine.co.uk?subject=Unsubscribe%20{{ $('PSMG Event Webhook').item.json.body.data.conversation_initiation_client_data.dynamic_variables.email }}" style="color:#3b82f6; text-decoration:none;">Unsubscribe</a>
+              </p>
+            </td>
+          </tr>
 
-    <!-- Load the ElevenLabs widget -->
-    <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
-  </body>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
 </html>
-```
