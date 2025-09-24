@@ -6,19 +6,17 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="x-apple-disable-message-reformatting" content="yes">
-  <!-- Webfont (safe fallback provided) -->
+  <!-- Webfont (safe fallbacks provided) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    /* Enhancements only; layout uses tables/inline styles */
+    /* Enhancements only; layout is table/inline-safe */
     @media screen and (max-width:600px){
       .container{width:100% !important}
       .px{padding-left:20px !important;padding-right:20px !important}
       .stack{display:block !important;width:100% !important}
       .center{text-align:center !important}
-      .pr0{padding-right:0 !important}
-      .pl0{padding-left:0 !important}
     }
-    /* Optional dark mode adjustments (in clients that support it) */
+    /* Optional dark mode tweaks (clients that support it) */
     @media (prefers-color-scheme: dark){
       body, table, td{ background:#0b1329 !important; color:#e8eef7 !important }
       .card{ background:#121a34 !important; border-color:#2a3865 !important }
@@ -39,7 +37,7 @@
       <td align="center" style="padding:24px;">
         <table role="presentation" class="container" width="700" cellpadding="0" cellspacing="0" border="0" style="width:700px; max-width:700px; background:#ffffff; border-radius:12px; overflow:hidden; box-shadow:0 6px 24px rgba(15,23,42,0.08);" bgcolor="#ffffff">
 
-          <!-- ==== HEADER (Outlook-safe; ONLY PSMG block; 36px logo) ==== -->
+          <!-- ===== HEADER (Outlook-safe; ONLY PSMG block; 36px logo) ===== -->
           <tr>
             <td style="background:#0b1f3b; padding:12px 24px;" bgcolor="#0b1f3b">
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
@@ -83,14 +81,12 @@
                     </table>
                     <!--<![endif]-->
                   </td>
-
-                  <!-- No right-hand white box anymore -->
                   <td style="background:#0b1f3b;" bgcolor="#0b1f3b"></td>
                 </tr>
               </table>
             </td>
           </tr>
-          <!-- ==== /HEADER ==== -->
+          <!-- ===== /HEADER ===== -->
 
           <!-- Title / intro -->
           <tr>
@@ -106,25 +102,31 @@
                 Hi there {{ $('PSMG Event Webhook').item.json.body.data.conversation_initiation_client_data.dynamic_variables.first_name }},
               </p>
 
-              <p style="margin:0 0 14px; font-size:16px; line-height:1.6; color:#334155;">
+              <p style="margin:0 0 10px; font-size:16px; line-height:1.6; color:#334155;">
                 Thanks for taking the time to speak with me ahead of the PSMG London Summit. Based on our conversation, I have pulled together some suggestions below including recommended sessions to attend and people to speak to. For further information, please visit the
                 <a href="https://www.psmg.co.uk/Events/33684-/The-2025-PSMG-Full-Day-London-Summit-Thriving-in-an-age-of-continuous-reinvention" target="_blank" rel="noopener noreferrer" style="color:#3b82f6; text-decoration:none; font-weight:600;">website.</a>
               </p>
 
-              <!-- NEW: Powered by block directly under the link (no white box/pill) -->
-              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 18px 0; border-collapse:collapse;">
+              <!-- Powered by block (centered, directly under the link) -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; margin:0 0 18px 0;">
                 <tr>
-                  <td style="font-size:12px; font-weight:600; color:#475569; padding:0 0 4px 0; font-family:Segoe UI, Arial, Helvetica, sans-serif;">
-                    Powered by
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding:0;">
-                    <a href="https://legalengine.co.uk/about-us" target="_blank" style="text-decoration:none;">
-                      <img src="https://legalengine.co.uk/hs-fs/hubfs/e8ad0e08-aa6c-4d44-9053-cdcf7bbaec5b.png?width=1704&height=678&name=e8ad0e08-aa6c-4d44-9053-cdcf7bbaec5b.png"
-                           height="28" alt="Legal Engine"
-                           style="display:block; border:0; outline:none; text-decoration:none; height:28px; width:auto; -ms-interpolation-mode:bicubic;">
-                    </a>
+                  <td align="center" style="padding:0;">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+                      <tr>
+                        <td align="center" style="font-size:12px; font-weight:600; color:#475569; padding:0 0 4px 0; font-family:Segoe UI, Arial, Helvetica, sans-serif;">
+                          Powered by
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="center" style="padding:0;">
+                          <a href="https://legalengine.co.uk/about-us" target="_blank" style="text-decoration:none;">
+                            <img src="https://legalengine.co.uk/hs-fs/hubfs/e8ad0e08-aa6c-4d44-9053-cdcf7bbaec5b.png?width=1704&height=678&name=e8ad0e08-aa6c-4d44-9053-cdcf7bbaec5b.png"
+                                 height="28" alt="Legal Engine"
+                                 style="display:block; border:0; outline:none; text-decoration:none; height:28px; width:auto; -ms-interpolation-mode:bicubic;">
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
                   </td>
                 </tr>
               </table>
