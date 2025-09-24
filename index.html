@@ -14,8 +14,7 @@
         --accent:#3b82f6;
         --border:#e5e7eb;
       }
-      /* Basic, on-brand look aligned to psmg.co.uk */
-      html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;}
+      html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:-apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;}
       .wrap{max-width:960px;margin:0 auto;padding:24px}
       .header{background:var(--navy);border-bottom:1px solid #0a1a32}
       .header .inner{max-width:960px;margin:0 auto;padding:12px 24px;text-align:center}
@@ -28,25 +27,26 @@
       .fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
       .field{display:flex;flex-direction:column;gap:6px;text-align:left}
       label{font-size:12px;color:#334155}
-      input[readonly]{background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:10px 12px;color:#0f172a}
+      input[type="text"]{background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:10px 12px;color:#0f172a}
       .cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:16px}
       .btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:12px 16px;border-radius:10px;font-weight:700}
       .btn.secondary{background:#e0ecff;color:#0b1f3b}
-      .divider{height:1px;background:var(--border);margin:6px 0}
+      .divider{height:1px;background:var(--border);margin:16px 0}
       .center{text-align:center}
-      /* Partner strip */
+
+      /* Powered by block (now inside the single card) */
       .partner{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin-top:12px}
       .partner small{color:var(--muted)}
       .le-logo{height:28px;max-width:180px;object-fit:contain;display:block}
+
       @media (max-width:800px){
         .fields{grid-template-columns:1fr}
       }
-      /* Dark mode nicety */
       @media (prefers-color-scheme: dark){
         :root{ --bg:#0b1329; --card:#121a34; --ink:#e8eef7; --border:#2a3865; --muted:#a9b5d2 }
         .logo{background:transparent; box-shadow:none}
         h1{color:#cfe0ff}
-        input[readonly]{background:#0f1730;border-color:#2a3865;color:#e8eef7}
+        input[type="text"]{background:#0f1730;border-color:#2a3865;color:#e8eef7}
         .btn.secondary{background:#203566;color:#e8eef7}
         .partner{background:#0f1730;border-color:#2a3865}
       }
@@ -66,50 +66,53 @@
       <h1>PSMG Full Day London Summit</h1>
       <p class="lead">Thriving in an age of continuous reinvention</p>
 
-      <!-- Prefilled identity (read-only) + Summit website -->
+      <!-- SINGLE CARD: identity + summit link + powered by + agent widget -->
       <div class="card section" style="margin-top:10px">
-        <p class="muted center" style="margin-top:0">Your details (from the link) — for your peace of mind</p>
+        <p class="muted center" style="margin-top:0">Your details (from the link) — you can edit these before starting</p>
+
+        <!-- Editable (pre-populated) fields -->
         <div class="fields" style="margin-top:8px">
           <div class="field">
-            <label>Full name</label>
-            <input id="f_full_name" type="text" readonly placeholder="(not provided)">
+            <label for="f_full_name">Full name</label>
+            <input id="f_full_name" type="text" placeholder="(not provided)">
           </div>
           <div class="field">
-            <label>Company</label>
-            <input id="f_company" type="text" readonly placeholder="(not provided)">
+            <label for="f_company">Company</label>
+            <input id="f_company" type="text" placeholder="(not provided)">
           </div>
           <div class="field">
-            <label>Email</label>
-            <input id="f_email" type="text" readonly placeholder="(not provided)">
+            <label for="f_email">Email</label>
+            <input id="f_email" type="text" placeholder="(not provided)">
           </div>
           <div class="field">
-            <label>Job role</label>
-            <input id="f_role" type="text" readonly placeholder="(not provided)">
+            <label for="f_role">Job role</label>
+            <input id="f_role" type="text" placeholder="(not provided)">
           </div>
         </div>
+
         <div class="cta">
           <a class="btn" href="https://www.psmg.co.uk/Events/33684-/The-2025-PSMG-Full-Day-London-Summit-Thriving-in-an-age-of-continuous-reinvention" target="_blank" rel="noopener">
             Summit website
           </a>
         </div>
-      </div>
 
-      <!-- Agent widget card -->
-      <div class="card section" style="margin-top:16px">
-        <p class="muted center" id="who" style="margin:0 0 10px"></p>
-        <elevenlabs-convai
-          id="psmgAgent"
-          agent-id="agent_6901k5h1cvv7fbvtex52v0a60fn4">
-        </elevenlabs-convai>
-
-        <!-- Partner strip with Legal Engine logo + About link -->
-        <div class="partner">
-          <small><b></b>Powered by </b></small>
+        <!-- Powered by block (same div as copy) -->
+        <div class="partner" id="poweredBy">
+          <small><b>Powered by</b></small>
           <a id="leLink" href="https://legalengine.co.uk/about-us" target="_blank" rel="noopener" aria-label="About Legal Engine">
             <img class="le-logo" src="https://legalengine.co.uk/hs-fs/hubfs/e8ad0e08-aa6c-4d44-9053-cdcf7bbaec5b.png?width=1704&height=678&name=e8ad0e08-aa6c-4d44-9053-cdcf7bbaec5b.png" alt="Legal Engine">
           </a>
           <a id="leTextLink" class="btn secondary" href="https://legalengine.co.uk/about-us" target="_blank" rel="noopener">About Legal Engine</a>
         </div>
+
+        <div class="divider" aria-hidden="true"></div>
+
+        <!-- Agent widget moved into this same card -->
+        <p class="muted center" id="who" style="margin:0 0 10px"></p>
+        <elevenlabs-convai
+          id="psmgAgent"
+          agent-id="agent_6901k5h1cvv7fbvtex52v0a60fn4">
+        </elevenlabs-convai>
       </div>
     </div>
 
@@ -130,9 +133,7 @@
           var last  = parts.join(" ");
           return { first:first, last:last };
         }
-        function uuid(){
-          return 'cid_' + Math.random().toString(36).slice(2,10) + Date.now().toString(36);
-        }
+        function uuid(){ return 'cid_' + Math.random().toString(36).slice(2,10) + Date.now().toString(36); }
 
         // ------- Read identity + UTM params
         var fullName = s(getQ(["name","full_name","fullname"]));
@@ -158,27 +159,34 @@
         var client_id = s(getQ("client_id")) || (localStorage.getItem("psmg_client_id") || uuid());
         try { localStorage.setItem("psmg_client_id", client_id); } catch(e){}
 
-        // ------- Prefill read-only boxes (show the UTM values have passed)
+        // ------- Prefill EDITABLE boxes (user can change them)
         document.getElementById("f_full_name").value = normalizedName || "";
         document.getElementById("f_company").value   = company || "";
         document.getElementById("f_email").value     = email || "";
         document.getElementById("f_role").value      = role || "";
 
-        // ------- Dynamic variables for the Agent
-        var dyn = {
-          first_name: first || "",
-          last_name:  last  || "",
-          full_name:  normalizedName || "",
-          role:       role || "",
-          company:    company || "",
-          email:      email || "",
-          client_id:  client_id,
-          utm_source:  utm_source || "",
-          utm_medium:  utm_medium || "",
-          utm_campaign:utm_campaign || "",
-          utm_term:    utm_term || "",
-          utm_content: utm_content || ""
-        };
+        // ------- Build dynamic variables from CURRENT inputs (so edits flow through)
+        function currentDyn(){
+          var nameNow    = document.getElementById("f_full_name").value.trim();
+          var roleNow    = document.getElementById("f_role").value.trim();
+          var companyNow = document.getElementById("f_company").value.trim();
+          var emailNow   = document.getElementById("f_email").value.trim();
+          var parts = splitName(nameNow);
+          return {
+            first_name: parts.first || first || "",
+            last_name:  parts.last  || last  || "",
+            full_name:  nameNow || normalizedName || "",
+            role:       roleNow || role || "",
+            company:    companyNow || company || "",
+            email:      emailNow || email || "",
+            client_id:  client_id,
+            utm_source:  utm_source || "",
+            utm_medium:  utm_medium || "",
+            utm_campaign:utm_campaign || "",
+            utm_term:    utm_term || "",
+            utm_content: utm_content || ""
+          };
+        }
 
         // ------- Greeting logic
         var hasIdentity = !!(normalizedName || company);
@@ -199,21 +207,30 @@
 
         var widget = document.getElementById("psmgAgent");
         if (widget) {
-          widget.setAttribute("dynamic-variables", JSON.stringify(dyn));
+          widget.setAttribute("dynamic-variables", JSON.stringify(currentDyn()));
           widget.setAttribute("override-first-message", firstMessage);
         }
+
+        // Keep widget's dynamic variables fresh on any edit
+        ["f_full_name","f_role","f_company","f_email"].forEach(function(id){
+          var el = document.getElementById(id);
+          if (!el) return;
+          el.addEventListener("input", function(){
+            if (widget) widget.setAttribute("dynamic-variables", JSON.stringify(currentDyn()));
+          });
+        });
 
         // Optional: log to n8n (minimal)
         try {
           var payload = new URLSearchParams();
           payload.set("event","landing_context");
           payload.set("client_id", client_id);
-          payload.set("first_name", dyn.first_name);
-          payload.set("last_name",  dyn.last_name);
-          payload.set("full_name",  dyn.full_name);
-          payload.set("role",       dyn.role);
-          payload.set("company",    dyn.company);
-          payload.set("email",      dyn.email);
+          payload.set("first_name", first || "");
+          payload.set("last_name",  last || "");
+          payload.set("full_name",  normalizedName || "");
+          payload.set("role",       role || "");
+          payload.set("company",    company || "");
+          payload.set("email",      email || "");
           payload.set("utm_source", utm_source);
           payload.set("utm_medium", utm_medium);
           payload.set("utm_campaign", utm_campaign);
@@ -227,7 +244,7 @@
           }).catch(function(){});
         } catch(e){}
 
-        // --- Append current querystring to Legal Engine About links (so UTMs follow)
+        // Append current querystring to Legal Engine About links (UTMs follow)
         var qsString = window.location.search || "";
         var leA = document.getElementById("leLink");
         var leB = document.getElementById("leTextLink");
@@ -240,4 +257,3 @@
     <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
   </body>
 </html>
-```
