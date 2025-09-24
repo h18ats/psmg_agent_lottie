@@ -14,7 +14,8 @@
         --accent:#3b82f6;
         --border:#e5e7eb;
       }
-      html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:-apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;}
+      /* Basic, on-brand look aligned to psmg.co.uk */
+      html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;}
       .wrap{max-width:960px;margin:0 auto;padding:24px}
       .header{background:var(--navy);border-bottom:1px solid #0a1a32}
       .header .inner{max-width:960px;margin:0 auto;padding:12px 24px;text-align:center}
@@ -27,20 +28,21 @@
       .fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
       .field{display:flex;flex-direction:column;gap:6px;text-align:left}
       label{font-size:12px;color:#334155}
+      /* Editable inputs (pre-populated by JS, but user can change them) */
       input[type="text"]{background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:10px 12px;color:#0f172a}
       .cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:16px}
       .btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;padding:12px 16px;border-radius:10px;font-weight:700}
       .btn.secondary{background:#e0ecff;color:#0b1f3b}
+      .divider{height:1px;background:var(--border);margin:6px 0}
       .center{text-align:center}
-
-      /* Powered-by block inside the first card */
+      /* Partner strip (now lives inside the first content card) */
       .partner{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin-top:12px}
       .partner small{color:var(--muted)}
       .le-logo{height:28px;max-width:180px;object-fit:contain;display:block}
-
       @media (max-width:800px){
         .fields{grid-template-columns:1fr}
       }
+      /* Dark mode nicety */
       @media (prefers-color-scheme: dark){
         :root{ --bg:#0b1329; --card:#121a34; --ink:#e8eef7; --border:#2a3865; --muted:#a9b5d2 }
         .logo{background:transparent; box-shadow:none}
@@ -95,7 +97,7 @@
           </a>
         </div>
 
-        <!-- Powered by block (kept here) -->
+        <!-- Powered by block MOVED here (same div as the copy) -->
         <div class="partner" id="poweredBy">
           <small><b>Powered by</b></small>
           <a id="leLink" href="https://legalengine.co.uk/about-us" target="_blank" rel="noopener" aria-label="About Legal Engine">
@@ -105,7 +107,7 @@
         </div>
       </div>
 
-      <!-- Agent widget card (no partner box here anymore) -->
+      <!-- Agent widget card (partner strip removed from here) -->
       <div class="card section" style="margin-top:16px">
         <p class="muted center" id="who" style="margin:0 0 10px"></p>
         <elevenlabs-convai
@@ -117,7 +119,7 @@
 
     <script>
       (function () {
-        // Helpers
+        // ------- Helpers
         var qs = new URLSearchParams(window.location.search);
         function getQ(keys){
           if (Array.isArray(keys)) { for (var i=0;i<keys.length;i++){ var v = qs.get(keys[i]); if(v) return v; } return ""; }
@@ -136,7 +138,7 @@
           return 'cid_' + Math.random().toString(36).slice(2,10) + Date.now().toString(36);
         }
 
-        // Identity + UTM
+        // ------- Read identity + UTM params
         var fullName = s(getQ(["name","full_name","fullname"]));
         var first    = s(getQ(["first","firstname","first_name","fname"]));
         var last     = s(getQ(["last","lastname","last_name","lname"]));
@@ -160,18 +162,19 @@
         var client_id = s(getQ("client_id")) || (localStorage.getItem("psmg_client_id") || uuid());
         try { localStorage.setItem("psmg_client_id", client_id); } catch(e){}
 
-        // Prefill EDITABLE boxes
+        // ------- Prefill EDITABLE boxes (user can change them)
         document.getElementById("f_full_name").value = normalizedName || "";
         document.getElementById("f_company").value   = company || "";
         document.getElementById("f_email").value     = email || "";
         document.getElementById("f_role").value      = role || "";
 
-        // Build dynamic variables from current inputs (reflect edits)
+        // ------- Dynamic variables for the Agent
         function currentDyn(){
-          var nameNow    = document.getElementById("f_full_name").value.trim();
-          var roleNow    = document.getElementById("f_role").value.trim();
-          var companyNow = document.getElementById("f_company").value.trim();
-          var emailNow   = document.getElementById("f_email").value.trim();
+          // Always read the current inputs so edits are respected
+          var nameNow   = document.getElementById("f_full_name").value.trim();
+          var roleNow   = document.getElementById("f_role").value.trim();
+          var companyNow= document.getElementById("f_company").value.trim();
+          var emailNow  = document.getElementById("f_email").value.trim();
           var parts = splitName(nameNow);
           return {
             first_name: parts.first || first || "",
@@ -189,29 +192,30 @@
           };
         }
 
-        // Set up widget
+        // ------- Greeting logic
+        var hasIdentity = !!(normalizedName || company);
+        var defaultGreeting =
+          "Hi there. I'm Lottie, one of the Summit organisers here at PSMG. " +
+          "We're super excited to have you on board this year. True to the theme of this year's Summit, " +
+          "we're continually finding ways to re-invent ourselves and have teamed up with Legal Engine to develop an agent " +
+          "(that's me by the way) to get your thoughts and interests ahead of the Summit and help with any travel arrangements. " +
+          "May I please confirm who I'm speaking with?";
+        var personalisedGreeting =
+          "Hi " + (first ? first : "there") +
+          (company ? " from " + company : "") +
+          ". I'm Lottie, one of the Summit organisers here at PSMG. We're super excited to have you on board this year. " +
+          "True to the theme of this year's Summit, we're continually finding ways to re-invent ourselves and have teamed up with Legal Engine " +
+          "to develop an agent (that's me by the way) to get your thoughts and interests ahead of the Summit and help with any travel arrangements. " +
+          "Shall we get started?";
+        var firstMessage = hasIdentity ? personalisedGreeting : defaultGreeting;
+
         var widget = document.getElementById("psmgAgent");
         if (widget) {
           widget.setAttribute("dynamic-variables", JSON.stringify(currentDyn()));
-          // Greeting
-          var hasIdentity = !!(normalizedName || company);
-          var defaultGreeting =
-            "Hi there. I'm Lottie, one of the Summit organisers here at PSMG. " +
-            "We're super excited to have you on board this year. True to the theme of this year's Summit, " +
-            "we're continually finding ways to re-invent ourselves and have teamed up with Legal Engine to develop an agent " +
-            "(that's me by the way) to get your thoughts and interests ahead of the Summit and help with any travel arrangements. " +
-            "May I please confirm who I'm speaking with?";
-          var personalisedGreeting =
-            "Hi " + (first ? first : "there") +
-            (company ? " from " + company : "") +
-            ". I'm Lottie, one of the Summit organisers here at PSMG. We're super excited to have you on board this year. " +
-            "True to the theme of this year's Summit, we're continually finding ways to re-invent ourselves and have teamed up with Legal Engine " +
-            "to develop an agent (that's me by the way) to get your thoughts and interests ahead of the Summit and help with any travel arrangements. " +
-            "Shall we get started?";
-          widget.setAttribute("override-first-message", hasIdentity ? personalisedGreeting : defaultGreeting);
+          widget.setAttribute("override-first-message", firstMessage);
         }
 
-        // Keep widget variables fresh on edit
+        // If the user edits fields, keep the widget’s dynamic variables fresh
         ["f_full_name","f_role","f_company","f_email"].forEach(function(id){
           var el = document.getElementById(id);
           if (!el) return;
@@ -220,25 +224,40 @@
           });
         });
 
-        // Append UTMs to Legal Engine links
+        // Optional: log to n8n (minimal)
+        try {
+          var payload = new URLSearchParams();
+          payload.set("event","landing_context");
+          payload.set("client_id", client_id);
+          payload.set("first_name", first || "");
+          payload.set("last_name",  last || "");
+          payload.set("full_name",  normalizedName || "");
+          payload.set("role",       role || "");
+          payload.set("company",    company || "");
+          payload.set("email",      email || "");
+          payload.set("utm_source", utm_source);
+          payload.set("utm_medium", utm_medium);
+          payload.set("utm_campaign", utm_campaign);
+          payload.set("utm_term",   utm_term);
+          payload.set("utm_content",utm_content);
+          payload.set("page_url",   location.href);
+          fetch("https://leonard-dev.app.n8n.cloud/webhook/luke-pre-brief", {
+            method:"POST",
+            headers:{ "Content-Type":"application/x-www-form-urlencoded" },
+            body: payload.toString()
+          }).catch(function(){});
+        } catch(e){}
+
+        // --- Append current querystring to Legal Engine About links (so UTMs follow)
         var qsString = window.location.search || "";
         var leA = document.getElementById("leLink");
         var leB = document.getElementById("leTextLink");
         if (leA) leA.href = "https://legalengine.co.uk/about-us" + qsString;
         if (leB) leB.href = "https://legalengine.co.uk/about-us" + qsString;
-
-        // Safety: hide any empty .partner blocks (prevents an “empty white box”)
-        document.querySelectorAll('.partner').forEach(function(el){
-          var hasImg = el.querySelector('img');
-          var hasText = (el.textContent || '').trim().length > 0;
-          if (!hasImg && !hasText) {
-            el.style.display = 'none';
-          }
-        });
       })();
     </script>
 
-    <!-- ElevenLabs widget -->
+    <!-- Load the ElevenLabs widget -->
     <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
   </body>
 </html>
