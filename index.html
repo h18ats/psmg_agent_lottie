@@ -197,11 +197,6 @@
           "Shall we get started?";
         var firstMessage = hasIdentity ? personalisedGreeting : defaultGreeting;
 
-        var who = document.getElementById("who");
-        if (who && (normalizedName || company)) {
-          who.textContent = "Detected: " + [normalizedName, company ? "("+company+")" : ""].filter(Boolean).join(" ");
-        }
-
         var widget = document.getElementById("psmgAgent");
         if (widget) {
           widget.setAttribute("dynamic-variables", JSON.stringify(dyn));
